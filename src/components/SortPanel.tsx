@@ -10,7 +10,7 @@ export const SortPanel = () => {
   return (
     <div className="px-6">
       <p className="mb-4 space-x-6">
-        <span>Sort by:</span>{" "}
+        <span className="font-bold">Sort by:</span>
         <ArrowUpDownIcon
           size={15}
           className="cursor-pointer inline"

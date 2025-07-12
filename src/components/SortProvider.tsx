@@ -33,7 +33,7 @@ export const SortProvider: FC<PropsWithChildren> = ({ children }) => {
 export const useSortCtx = () => {
   const ctx = use(SortContext);
   if (!ctx) {
-    throw new Error("useSortCtx must be used within a SortProvider");
+    throw new Error("Element is out of context...");
   }
   return ctx;
 };
