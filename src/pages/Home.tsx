@@ -1,29 +1,32 @@
 import { PostsView } from "@/components/PostsView";
-import { Spinner } from "@/components/Spinner";
-import { addPost, getPosts } from "@/firebase";
-import { Suspense, useEffect } from "react";
+import { useTypedDispatch } from "@/store";
+import { addPostAction, initiate } from "@/store/posts.slice";
+import { useEffect } from "react";
 
 export const Home = () => {
+  const dispatch = useTypedDispatch();
   useEffect(() => {
-    getPosts().then((posts) => {
-      console.log({ posts });
-    });
-  }, []);
+    dispatch(initiate());
+  }, [dispatch]);
 
   const handleClick = async () => {
-    const res = await addPost({
-      title: "My new title",
-      content: "Some new content",
-    });
-    console.log("Add post: ", res);
+    dispatch(
+      addPostAction({
+        title: "My new title",
+        content: "Some new content",
+      })
+    );
   };
   return (
-    <>
+    <div className="">
       <h1>Main view</h1>
       <button onClick={handleClick}>Add post</button>
-      <Suspense fallback={<Spinner />}>
-        <PostsView posts={getPosts()} />
-      </Suspense>
-    </>
+      <div className="flex gap-6">
+        <aside className="px-4 w-1/4">Control</aside>
+        {/* <Suspense fallback={<Spinner />}> */}
+        <PostsView className="grow" />
+        {/* </Suspense> */}
+      </div>
+    </div>
   );
 };

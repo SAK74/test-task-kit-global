@@ -3,11 +3,11 @@ import {
   addDoc,
   collection,
   CollectionReference,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   getFirestore,
-  serverTimestamp,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -27,7 +27,7 @@ export type Post = {
   title: string;
   content?: string;
   id: string;
-  timestamp?: string;
+  timestamp?: number;
 };
 
 export async function getPosts() {
@@ -43,9 +43,8 @@ export async function addPost(post: Omit<Post, "id">) {
   >;
   const docRef = await addDoc(postsCollection, {
     ...post,
-    timestamp: serverTimestamp(),
+    timestamp: Date.now(),
   });
-  console.log("In action: ", docRef);
 
   return { ...post, id: docRef.id };
 }
@@ -59,4 +58,11 @@ export async function getPostById(id: string) {
   }
 
   return { ...docSnap.data(), id: docSnap.id };
+}
+
+export async function deletePost(id: string) {
+  const postDoc = doc(db, "posts", id);
+  await deleteDoc(postDoc);
+
+  return id;
 }
