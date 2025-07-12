@@ -10,4 +10,6 @@ export type PostFormType = z.infer<typeof postSchema>;
 export type Post = PostFormType & {
   id: string;
   timestamp?: number;
+  author?: string;
+  comments?: string[];
 };

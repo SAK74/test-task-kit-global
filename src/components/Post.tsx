@@ -19,6 +19,7 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   const handleRemove = async () => {
     dispatch(removePost(post.id));
   };
+
   return (
     <Card className="w-full shadow-lg p-2">
       <CardHeader className="relative">

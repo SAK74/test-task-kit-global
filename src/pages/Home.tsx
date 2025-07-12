@@ -1,5 +1,7 @@
 import { AddForm } from "@/components/AddForm";
 import { PostsView } from "@/components/PostsView";
+import { SortPanel } from "@/components/SortPanel";
+import { SortProvider } from "@/components/SortProvider";
 import { Card } from "@/components/ui/card";
 import { useTypedDispatch } from "@/store";
 import { initiate } from "@/store/posts.slice";
@@ -12,16 +14,19 @@ export const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className="">
-      <h1>Main view</h1>
-      <div className="flex gap-6">
-        <Card className="px-4 w-1/4">
-          <AddForm />
-        </Card>
-        {/* <Suspense fallback={<Spinner />}> */}
-        <PostsView className="grow" />
-        {/* </Suspense> */}
-      </div>
-    </div>
+    <main className="">
+      <h1>Posts</h1>
+      <SortProvider>
+        <div className="flex gap-6">
+          <Card className="px-4 w-1/4">
+            <AddForm />
+            <SortPanel />
+          </Card>
+          {/* <Suspense fallback={<Spinner />}> */}
+          <PostsView className="grow" />
+          {/* </Suspense> */}
+        </div>
+      </SortProvider>
+    </main>
   );
 };
