@@ -4,22 +4,31 @@ import { Form, FormField } from "./ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postSchema, type PostFormType } from "@/schema";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { CustomFormItem } from "./FormItem";
 import { Textarea } from "./ui/textarea";
+import { cn } from "@/lib/utils";
+import { useTypedDispatch } from "@/store";
+import { addPostAction } from "@/store/posts.slice";
 
-export const PostForm: FC<{ initial?: PostFormType }> = ({ initial }) => {
+export const PostForm: FC<{
+  initial?: PostFormType;
+  className?: string;
+  ControllPanel: FC<{ onReset: () => void }>;
+  closeWindow: () => void;
+}> = ({ initial, className, ControllPanel, closeWindow }) => {
   const defaultValues = initial ?? { title: "", content: "" };
   const form = useForm({ resolver: zodResolver(postSchema), defaultValues });
 
+  const dispatch = useTypedDispatch();
   const onValid: SubmitHandler<PostFormType> = (data) => {
-    console.log({ data });
+    dispatch(addPostAction(data));
+    closeWindow();
   };
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onValid)}
-        className="flex flex-col gap-4"
+        className={cn("flex flex-col gap-4", className)}
       >
         <FormField
           name="title"
@@ -41,21 +50,7 @@ export const PostForm: FC<{ initial?: PostFormType }> = ({ initial }) => {
             />
           )}
         />
-        <div className="self-end space-x-3">
-          <Button
-            type="button"
-            variant={"outline"}
-            size={"sm"}
-            onClick={() => {
-              form.reset();
-            }}
-          >
-            Reset
-          </Button>
-          <Button type="submit" variant={"outline"} size={"sm"}>
-            Submit
-          </Button>
-        </div>
+        <ControllPanel onReset={form.reset} />
       </form>
     </Form>
   );

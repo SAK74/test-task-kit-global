@@ -1,10 +1,11 @@
-import { addPost, deletePost, getPosts, type Post } from "@/firebase";
+import { addPost, deletePost, getPosts } from "@/firebase";
 import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
 import type { TypedStore } from ".";
+import type { Post, PostFormType } from "@/schema";
 
 const postAdapter = createEntityAdapter<Post>({
   sortComparer: (a, b) => a.timestamp ?? 0 - (b.timestamp ?? 0),
@@ -16,7 +17,7 @@ export const removePost = createAsyncThunk("delete/post", (id: Post["id"]) =>
 );
 export const addPostAction = createAsyncThunk(
   "add/post",
-  (post: Omit<Post, "id">) => addPost(post)
+  (post: PostFormType) => addPost(post)
 );
 
 const postsSlice = createSlice({
@@ -35,6 +36,7 @@ const postsSlice = createSlice({
       })
       .addCase(initiate.fulfilled, (state, action) => {
         state.status = "complete";
+        state.error = undefined;
         postAdapter.setAll(state, action.payload);
       })
       .addCase(initiate.rejected, (state, action) => {
@@ -42,13 +44,23 @@ const postsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(removePost.fulfilled, (state, action) => {
+        state.status = "complete";
+        state.error = undefined;
         postAdapter.removeOne(state, action.payload);
+      })
+      .addCase(removePost.pending, (state) => {
+        state.status = "pending";
       })
       .addCase(removePost.rejected, (state, action) => {
         state.error = action.error.message;
       })
       .addCase(addPostAction.fulfilled, (state, action) => {
+        state.status = "complete";
+        state.error = undefined;
         postAdapter.addOne(state, action.payload);
+      })
+      .addCase(addPostAction.pending, (state) => {
+        state.status = "pending";
       })
       .addCase(addPostAction.rejected, (state, action) => {
         state.error = action.error.message;
