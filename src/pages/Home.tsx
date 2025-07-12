@@ -1,3 +1,4 @@
+import { PostForm } from "@/components/PostForm";
 import { PostsView } from "@/components/PostsView";
 import { useTypedDispatch } from "@/store";
 import { addPostAction, initiate } from "@/store/posts.slice";
@@ -19,12 +20,13 @@ export const Home = () => {
   };
   return (
     <div className="">
+      <PostForm />
       <h1>Main view</h1>
       <button onClick={handleClick}>Add post</button>
       <div className="flex gap-6">
         <aside className="px-4 w-1/4">Control</aside>
         {/* <Suspense fallback={<Spinner />}> */}
-        <PostsView className="grow" />
+        {/* <PostsView className="grow" /> */}
         {/* </Suspense> */}
       </div>
     </div>

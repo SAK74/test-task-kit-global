@@ -1,10 +1,10 @@
 import { type FC } from "react";
 import { SinglePost } from "./Post";
-import type { Post } from "@/firebase";
 import { useTypedSelector } from "@/store";
 import { selectAllPosts } from "@/store/posts.slice";
 import { Spinner } from "./Spinner";
 import { cn } from "@/lib/utils";
+import type { Post } from "@/schema";
 
 // const fakePosts: Post[] = [
 //   {

@@ -9,10 +9,10 @@ import {
 import { Button } from "./ui/button";
 import { Link } from "react-router";
 import { Paths } from "@/routes";
-import { type Post } from "@/firebase";
 import { Trash2Icon } from "lucide-react";
 import { useTypedDispatch } from "@/store";
 import { removePost } from "@/store/posts.slice";
+import type { Post } from "@/schema";
 
 export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   const dispatch = useTypedDispatch();

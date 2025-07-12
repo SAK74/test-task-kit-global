@@ -9,6 +9,7 @@ import {
   getDocs,
   getFirestore,
 } from "firebase/firestore";
+import type { Post } from "./schema";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbzk13AY8OitKdKDhyBngDdwDqX0clPRE",
@@ -23,12 +24,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-export type Post = {
-  title: string;
-  content?: string;
-  id: string;
-  timestamp?: number;
-};
+// export type Post = {
+//   title: string;
+//   content?: string;
+//   id: string;
+//   timestamp?: number;
+// };
 
 export async function getPosts() {
   const postsCollection = collection(db, "posts") as CollectionReference<Post>;
