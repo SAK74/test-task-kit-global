@@ -1,69 +1,39 @@
-# React + TypeScript + Vite
+# Test Task Kit Global
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a React and TypeScript application built with Vite and Next.js. It features a post management service with Firebase integration, state management using Redux Toolkit, and a modular UI based on Radix UI components and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The app allows users to review and manage posts — including adding, editing, removing, commenting, viewing detailed information, as well as sorting and filtering posts by multiple parameters.
 
-## Expanding the ESLint configuration
+Web preview:  
+ [Static](http://www.sak74.pl/Kit_Global/)  
+ [SSR](https://posts-task-mu.vercel.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Core Components
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **UI Components**  
+  Located in **src/components/ui/**, these include dialogs, drawers, tooltips, and cards used throughout the app.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **Post Components**  
+  Components such as [Post](src/components/Post.tsx) and [EditPost](src/components/EditPost.tsx) handle displaying posts and providing editing functionality.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **State Management**  
+  Redux Toolkit is used for state management. See [posts.slice.ts](src/store/posts.slice.ts) for actions like `initiate`, `addPostAction`, and `updatePostAction`.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Firebase Integration**  
+  CRUD operations for posts are implemented in [firebase.ts](src/firebase.ts), integrating Firebase Firestore.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Launch Instructions
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Install Dependencies**
+
+  ```sh
+  npm install
+  ```
+
+- **Run on dev mode**
+
+  ```sh
+  npm run dev
+  ```
