@@ -34,7 +34,6 @@ export const fakePosts: Post[] = [
 export const PostsView: FC<{ posts?: Promise<Post[]>; className?: string }> = ({
   className,
 }) => {
-  //   const renderPosts = use(posts);
   // const renderedPosts = fakePosts;
   const { status, error } = useTypedSelector((state) => state.posts);
   const renderedPosts = useTypedSelector(selectAllPosts);

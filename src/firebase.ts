@@ -21,7 +21,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_API_ID,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
