@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,21 +9,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Paths } from "@/routes";
 import { useTypedSelector } from "@/store";
 import { selectPostById } from "@/store/posts.slice";
 import { ArrowBigLeftDashIcon } from "lucide-react";
-import { Link, useParams } from "react-router";
+import Link from "next/link";
+import { FC } from "react";
 
-export const Details = () => {
-  const params = useParams();
-  const id = params.id!;
+export const Details: FC<{ id: string }> = ({ id }) => {
   const post = useTypedSelector((state) => selectPostById(state, id));
+
   // const post = fakePosts[0];
 
   return (
-    <main className="flex flex-col w-1/2 mx-auto gap-6">
-      <Link to={`${Paths.root}`} className="self-start">
+    <>
+      <Link href={"/"} className="self-start">
         <Button variant={"link"}>
           <ArrowBigLeftDashIcon />
           Back to view
@@ -54,6 +55,6 @@ export const Details = () => {
           </ul>
         </CardContent>
       </Card>
-    </main>
+    </>
   );
 };

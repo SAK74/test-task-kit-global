@@ -7,8 +7,6 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Link } from "react-router";
-import { Paths } from "@/routes";
 import { MessageSquareMoreIcon, Trash2Icon } from "lucide-react";
 import { useTypedDispatch } from "@/store";
 import { removePost, updatePostAction } from "@/store/posts.slice";
@@ -16,6 +14,7 @@ import type { Post } from "@/schema";
 import { EditPost } from "./EditPost";
 import { Tooltip } from "./Tooltip";
 import { CommentPost } from "./CommentPost";
+import Link from "next/link";
 
 export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   const dispatch = useTypedDispatch();
@@ -43,7 +42,7 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
 
         <CardTitle>{post.title}</CardTitle>
         <CardAction className="flex justify-between **:cursor-pointer">
-          <Link to={`${Paths.details}/${post.id}`}>
+          <Link href={`/details/${post.id}`}>
             <Button variant={"link"} className="">
               Details...
             </Button>

@@ -4,7 +4,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import type { TypedStore } from ".";
+import type { RootState } from ".";
 import type { Post, PostFormType } from "@/schema";
 
 const postAdapter = createEntityAdapter<Post>({
@@ -22,7 +22,7 @@ export const addPostAction = createAsyncThunk(
 export const updatePostAction = createAsyncThunk(
   "update/post",
   ({ id, data }: { id: Post["id"]; data: Partial<Omit<Post, "id">> }) => {
-    return updatePost(id, data);
+    return updatePost(id, { ...data, timestamp: Date.now() });
   }
 );
 
@@ -90,4 +90,4 @@ const postsSlice = createSlice({
 
 export default postsSlice;
 export const { selectAll: selectAllPosts, selectById: selectPostById } =
-  postAdapter.getSelectors<TypedStore>((state) => state.posts);
+  postAdapter.getSelectors<RootState>((state) => state.posts);

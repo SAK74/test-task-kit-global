@@ -13,12 +13,12 @@ import {
 import type { Post } from "./schema";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCbzk13AY8OitKdKDhyBngDdwDqX0clPRE",
-  authDomain: "test-firebase-db-project-1dccc.firebaseapp.com",
-  projectId: "test-firebase-db-project-1dccc",
-  storageBucket: "test-firebase-db-project-1dccc.firebasestorage.app",
-  messagingSenderId: "1078964232678",
-  appId: "1:1078964232678:web:23699a340bfa86bc767627",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGE_SENDING_ID,
+  appId: process.env.NEXT_PUBLIC_API_ID,
 };
 
 // Initialize Firebase
@@ -38,7 +38,6 @@ export async function addPost(post: Omit<Post, "id">) {
   >;
   const docRef = await addDoc(postsCollection, {
     ...post,
-    timestamp: Date.now(),
   });
 
   return { ...post, id: docRef.id };
