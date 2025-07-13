@@ -26,9 +26,7 @@ export const Home = () => {
               <SortPanel />
               <FilterPanel />
             </Card>
-            {/* <Suspense fallback={<Spinner />}> */}
             <PostsView className="grow" />
-            {/* </Suspense> */}
           </div>
         </FilterProvider>
       </SortProvider>

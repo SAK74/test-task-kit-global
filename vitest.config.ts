@@ -9,13 +9,6 @@ export default defineConfig({
     include: ["tests/**/*.test.tsx"],
     environment: "jsdom",
     setupFiles: "./tests/setup.ts",
-
-    // coverage: {
-    //   provider: "v8",
-    //   include: ["src/**/*"],
-    //   exclude: [],
-    //   clean: true,
-    // },
   },
   resolve: {
     alias: {
