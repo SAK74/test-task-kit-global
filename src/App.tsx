@@ -3,8 +3,9 @@ import "./App.css";
 import { routes } from "./routes";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { BASE_URL } from "../base";
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes, { basename: BASE_URL });
 
 function App() {
   return (
