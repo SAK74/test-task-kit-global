@@ -10,9 +10,12 @@ import {
 } from "./ui/drawer";
 import { PostForm } from "./PostForm";
 import { useState } from "react";
+import { addPostAction } from "@/store/posts.slice";
+import { useTypedDispatch } from "@/store";
 
-export const AddForm = () => {
+export const AddPost = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useTypedDispatch();
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
@@ -56,6 +59,9 @@ export const AddForm = () => {
               </Button>
             </DrawerFooter>
           )}
+          onSubmit={(post) => {
+            dispatch(addPostAction(post));
+          }}
         />
       </DrawerContent>
     </Drawer>

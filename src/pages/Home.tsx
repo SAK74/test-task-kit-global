@@ -1,4 +1,4 @@
-import { AddForm } from "@/components/AddForm";
+import { AddPost } from "@/components/AddPost";
 import { FilterPanel } from "@/components/FilterPanel";
 import { FilterProvider } from "@/components/FilterProvider";
 import { PostsView } from "@/components/PostsView";
@@ -22,7 +22,7 @@ export const Home = () => {
         <FilterProvider>
           <div className="flex gap-6">
             <Card className="px-4 w-1/4">
-              <AddForm />
+              <AddPost />
               <SortPanel />
               <FilterPanel />
             </Card>

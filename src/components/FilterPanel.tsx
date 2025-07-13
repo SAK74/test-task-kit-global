@@ -17,12 +17,6 @@ export const FilterPanel = () => {
     filterByContent,
   } = useFilterCtx();
 
-  //   const [author, setAuthor] = useState("");
-  //   const [content, setContent] = useState("");
-
-  //   const [byAuthor, setByAuthor] = useState<CheckedState>(false);
-  //   const [byContent, setByContent] = useState<CheckedState>(false);
-
   return (
     <div className="px-6">
       <p className="mb-4 space-x-6">

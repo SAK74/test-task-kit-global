@@ -44,7 +44,12 @@ export const Details = () => {
           <Separator className="my-2" />
           <ul className="italic list-disc list-inside">
             {post.comments?.map((comment, i) => (
-              <li key={i}>{comment}</li>
+              <li key={i} className="">
+                <span className="font-semibold">
+                  {post.author ?? "Author"}:
+                </span>{" "}
+                {comment}
+              </li>
             ))}
           </ul>
         </CardContent>

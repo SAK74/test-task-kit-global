@@ -1,4 +1,4 @@
-import { addPost, deletePost, getPosts } from "@/firebase";
+import { addPost, deletePost, getPosts, updatePost } from "@/firebase";
 import {
   createAsyncThunk,
   createEntityAdapter,
@@ -17,7 +17,13 @@ export const removePost = createAsyncThunk("delete/post", (id: Post["id"]) =>
 );
 export const addPostAction = createAsyncThunk(
   "add/post",
-  (post: PostFormType) => addPost(post)
+  (post: PostFormType) => addPost({ ...post, comments: [] })
+);
+export const updatePostAction = createAsyncThunk(
+  "update/post",
+  ({ id, data }: { id: Post["id"]; data: Partial<Omit<Post, "id">> }) => {
+    return updatePost(id, data);
+  }
 );
 
 const postsSlice = createSlice({
@@ -64,6 +70,20 @@ const postsSlice = createSlice({
       })
       .addCase(addPostAction.rejected, (state, action) => {
         state.error = action.error.message;
+        state.status = "failed";
+      })
+      .addCase(updatePostAction.fulfilled, (state, action) => {
+        const { id, ...changes } = action.payload;
+        postAdapter.updateOne(state, { id, changes });
+        state.error = undefined;
+        state.status = "complete";
+      })
+      .addCase(updatePostAction.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.status = "failed";
+      })
+      .addCase(updatePostAction.pending, (state) => {
+        state.status = "pending";
       });
   },
 });

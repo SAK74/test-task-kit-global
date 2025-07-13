@@ -9,10 +9,13 @@ import {
 import { Button } from "./ui/button";
 import { Link } from "react-router";
 import { Paths } from "@/routes";
-import { Trash2Icon } from "lucide-react";
+import { MessageSquareMoreIcon, Trash2Icon } from "lucide-react";
 import { useTypedDispatch } from "@/store";
-import { removePost } from "@/store/posts.slice";
+import { removePost, updatePostAction } from "@/store/posts.slice";
 import type { Post } from "@/schema";
+import { EditPost } from "./EditPost";
+import { Tooltip } from "./Tooltip";
+import { CommentPost } from "./CommentPost";
 
 export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   const dispatch = useTypedDispatch();
@@ -23,6 +26,21 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   return (
     <Card className="w-full shadow-lg p-2">
       <CardHeader className="relative">
+        <CommentPost
+          id={post.id}
+          onSubmit={(id, comment) => {
+            const comments = [...post.comments];
+            comments.push(comment);
+            dispatch(updatePostAction({ id, data: { comments } }));
+          }}
+        >
+          <Tooltip label="Comment the post">
+            <Button variant={"ghost"} className="justify-self-start">
+              <MessageSquareMoreIcon className="float-left" />
+            </Button>
+          </Tooltip>
+        </CommentPost>
+
         <CardTitle>{post.title}</CardTitle>
         <CardAction className="flex justify-between **:cursor-pointer">
           <Link to={`${Paths.details}/${post.id}`}>
@@ -30,7 +48,10 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
               Details...
             </Button>
           </Link>
-          <Trash2Icon onClick={handleRemove} />
+          <EditPost post={post} />
+          <Button variant={"ghost"} onClick={handleRemove}>
+            <Trash2Icon />
+          </Button>
         </CardAction>
       </CardHeader>
       <CardContent className="border text-left rounded-md">

@@ -8,6 +8,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  updateDoc,
 } from "firebase/firestore";
 import type { Post } from "./schema";
 
@@ -23,13 +24,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-
-// export type Post = {
-//   title: string;
-//   content?: string;
-//   id: string;
-//   timestamp?: number;
-// };
 
 export async function getPosts() {
   const postsCollection = collection(db, "posts") as CollectionReference<Post>;
@@ -66,4 +60,10 @@ export async function deletePost(id: string) {
   await deleteDoc(postDoc);
 
   return id;
+}
+
+export async function updatePost(id: string, data: Partial<Omit<Post, "id">>) {
+  const postDoc = doc(db, "posts", id);
+  await updateDoc(postDoc, data);
+  return { id, ...data };
 }

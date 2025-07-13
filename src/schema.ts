@@ -11,5 +11,5 @@ export type Post = PostFormType & {
   id: string;
   timestamp?: number;
   author?: string;
-  comments?: string[];
+  comments: string[];
 };

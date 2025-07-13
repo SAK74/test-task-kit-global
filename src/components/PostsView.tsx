@@ -21,11 +21,13 @@ export const fakePosts: Post[] = [
     content: "Some new content",
     title: "My new title",
     id: "divxjdv9EP8HvvTrHfpm",
+    comments: [],
   },
   {
     content: "Some new content",
     title: "My new title",
     id: "ks5LahmDnBMB1j7UVWne",
+    comments: [],
   },
 ];
 
@@ -59,16 +61,6 @@ export const PostsView: FC<{ posts?: Promise<Post[]>; className?: string }> = ({
 
   const { filterByAuthor, authorValue, filterByContent, contentValue } =
     useFilterCtx();
-  // const filterFn = (post: Post) => {
-  //   switch (filterBy) {
-  //     case "author":
-  //       return post.author?.toLowerCase().includes(filterValue?.toLowerCase() ?? "");
-  //     case "content":
-  //       return post.content.toLowerCase().includes(filterValue?.toLowerCase() ?? "");
-  //     default:
-  //       return true;
-  //   }
-  // };
 
   const filterFn = (post: Post) => {
     if (filterByAuthor && authorValue) {
@@ -83,7 +75,7 @@ export const PostsView: FC<{ posts?: Promise<Post[]>; className?: string }> = ({
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       {status === "pending" && <Spinner />}
-      {error}
+      {error && <div className="text-destructive">{error}</div>}
       {renderedPosts
         .filter(filterFn)
         .sort(sortFn)

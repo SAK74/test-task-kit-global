@@ -8,8 +8,6 @@ import {
   type SetStateAction,
 } from "react";
 
-// type FilterBy = typeof filters[number]
-
 type ContextType = {
   filterByAuthor: boolean;
   setFilterByAuthor: Dispatch<SetStateAction<boolean>>;

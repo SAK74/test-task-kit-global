@@ -2,26 +2,28 @@ import type { FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Form, FormField } from "./ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { postSchema, type PostFormType } from "@/schema";
+import { postSchema, type Post, type PostFormType } from "@/schema";
 import { Input } from "./ui/input";
 import { CustomFormItem } from "./FormItem";
 import { Textarea } from "./ui/textarea";
 import { cn } from "@/lib/utils";
-import { useTypedDispatch } from "@/store";
-import { addPostAction } from "@/store/posts.slice";
 
 export const PostForm: FC<{
-  initial?: PostFormType;
+  initial?: Post;
   className?: string;
   ControllPanel: FC<{ onReset: () => void }>;
   closeWindow: () => void;
-}> = ({ initial, className, ControllPanel, closeWindow }) => {
+  onSubmit: (post: PostFormType & { id: Post["id"] }) => void;
+}> = ({ initial, className, ControllPanel, closeWindow, onSubmit }) => {
   const defaultValues = initial ?? { title: "", content: "" };
   const form = useForm({ resolver: zodResolver(postSchema), defaultValues });
 
-  const dispatch = useTypedDispatch();
   const onValid: SubmitHandler<PostFormType> = (data) => {
-    dispatch(addPostAction(data));
+    if (initial) {
+      onSubmit({ ...data, id: initial.id });
+    } else {
+      onSubmit(data as Post);
+    }
     closeWindow();
   };
   return (
