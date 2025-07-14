@@ -13,14 +13,20 @@ import {
 import type { Post } from "@/schema";
 import { useTypedDispatch } from "@/store";
 import { updatePostAction } from "@/store/posts.slice";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/auth";
 
 export const EditPost: FC<{ post: Post }> = ({ post }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useTypedDispatch();
+  const [user] = useAuthState(auth);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"ghost"}>
+        <Button
+          variant={"ghost"}
+          disabled={!user || user.email !== post.author}
+        >
           <SquarePenIcon />
         </Button>
       </DialogTrigger>

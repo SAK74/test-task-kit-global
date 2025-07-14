@@ -43,13 +43,20 @@ export const Details: FC<{ id: string }> = ({ id }) => {
         <CardContent className="text-left">
           <div>{post.content}</div>
           <Separator className="my-2" />
+          <p className="text-center">Commented by:</p>
           <ul className="italic list-disc list-inside">
             {post.comments?.map((comment, i) => (
-              <li key={i} className="">
-                <span className="font-semibold">
-                  {post.author ?? "Author"}:
-                </span>{" "}
-                {comment}
+              <li key={i} className="flex justify-between">
+                <span>
+                  <span className="font-semibold">
+                    {comment.by ?? "unknown"}:
+                  </span>{" "}
+                  {comment.text}
+                </span>
+                <span className="text-xs">
+                  {comment.timestamp &&
+                    new Date(comment.timestamp).toLocaleDateString()}
+                </span>
               </li>
             ))}
           </ul>

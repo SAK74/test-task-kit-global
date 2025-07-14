@@ -1,4 +1,4 @@
-import { addPost, deletePost, getPosts, updatePost } from "@/firebase";
+import { addPost, deletePost, getPosts, updatePost } from "@/firebase/db";
 import {
   createAsyncThunk,
   createEntityAdapter,

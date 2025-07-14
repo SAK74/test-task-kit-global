@@ -15,12 +15,14 @@ import { EditPost } from "./EditPost";
 import { Tooltip } from "./Tooltip";
 import { CommentPost } from "./CommentPost";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   const dispatch = useTypedDispatch();
   const handleRemove = async () => {
     dispatch(removePost(post.id));
   };
+  const { data } = useSession();
 
   return (
     <Card className="w-full shadow-lg p-2">
@@ -29,15 +31,25 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
           id={post.id}
           onSubmit={(id, comment) => {
             const comments = [...post.comments];
-            comments.push(comment);
+            comments.push({
+              text: comment,
+              timestamp: Date.now(),
+              by: data?.user?.email ?? "unknown",
+            });
             dispatch(updatePostAction({ id, data: { comments } }));
           }}
         >
-          <Tooltip label="Comment the post">
-            <Button variant={"ghost"} className="justify-self-start">
-              <MessageSquareMoreIcon className="float-left" />
-            </Button>
-          </Tooltip>
+          {data?.user?.email !== post.author && (
+            <Tooltip label="Comment the post">
+              <Button
+                variant={"ghost"}
+                className="justify-self-start"
+                disabled={!data?.user}
+              >
+                <MessageSquareMoreIcon className="float-left" />
+              </Button>
+            </Tooltip>
+          )}
         </CommentPost>
 
         <CardTitle>{post.title}</CardTitle>
@@ -48,7 +60,11 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
             </Button>
           </Link>
           <EditPost post={post} />
-          <Button variant={"ghost"} onClick={handleRemove}>
+          <Button
+            variant={"ghost"}
+            onClick={handleRemove}
+            disabled={!data?.user || data.user.email !== post.author}
+          >
             <Trash2Icon />
           </Button>
         </CardAction>
