@@ -16,12 +16,15 @@ import type { Post } from "@/schema";
 import { EditPost } from "./EditPost";
 import { Tooltip } from "./Tooltip";
 import { CommentPost } from "./CommentPost";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/auth";
 
 export const SinglePost: FC<{ post: Post }> = ({ post }) => {
   const dispatch = useTypedDispatch();
   const handleRemove = async () => {
     dispatch(removePost(post.id));
   };
+  const [user] = useAuthState(auth);
 
   return (
     <Card className="w-full shadow-lg p-2">
@@ -30,15 +33,25 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
           id={post.id}
           onSubmit={(id, comment) => {
             const comments = [...post.comments];
-            comments.push(comment);
+            comments.push({
+              text: comment,
+              timestamp: Date.now(),
+              by: user!.email!,
+            });
             dispatch(updatePostAction({ id, data: { comments } }));
           }}
         >
-          <Tooltip label="Comment the post">
-            <Button variant={"ghost"} className="justify-self-start">
-              <MessageSquareMoreIcon className="float-left" />
-            </Button>
-          </Tooltip>
+          {user?.email !== post.author && (
+            <Tooltip label="Comment the post">
+              <Button
+                variant={"ghost"}
+                className="justify-self-start"
+                disabled={!user}
+              >
+                <MessageSquareMoreIcon className="float-left" />
+              </Button>
+            </Tooltip>
+          )}
         </CommentPost>
 
         <CardTitle>{post.title}</CardTitle>
@@ -49,7 +62,11 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
             </Button>
           </Link>
           <EditPost post={post} />
-          <Button variant={"ghost"} onClick={handleRemove}>
+          <Button
+            variant={"ghost"}
+            onClick={handleRemove}
+            disabled={!user || user?.email !== post.author}
+          >
             <Trash2Icon />
           </Button>
         </CardAction>

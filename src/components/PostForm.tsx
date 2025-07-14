@@ -7,6 +7,8 @@ import { Input } from "./ui/input";
 import { CustomFormItem } from "./FormItem";
 import { Textarea } from "./ui/textarea";
 import { cn } from "@/lib/utils";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/auth";
 
 export const PostForm: FC<{
   initial?: Post;
@@ -18,11 +20,13 @@ export const PostForm: FC<{
   const defaultValues = initial ?? { title: "", content: "" };
   const form = useForm({ resolver: zodResolver(postSchema), defaultValues });
 
+  const [user] = useAuthState(auth);
+
   const onValid: SubmitHandler<PostFormType> = (data) => {
     if (initial) {
       onSubmit({ ...data, id: initial.id });
     } else {
-      onSubmit(data as Post);
+      onSubmit({ ...data, author: user?.email } as Post);
     }
     closeWindow();
   };

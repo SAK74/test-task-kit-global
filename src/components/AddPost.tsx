@@ -12,14 +12,17 @@ import { PostForm } from "./PostForm";
 import { useState } from "react";
 import { addPostAction } from "@/store/posts.slice";
 import { useTypedDispatch } from "@/store";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/auth";
 
 export const AddPost = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useTypedDispatch();
+  const [user] = useAuthState(auth);
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button>
+        <Button disabled={!user}>
           <CirclePlusIcon />
           Post
         </Button>

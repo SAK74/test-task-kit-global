@@ -8,29 +8,6 @@ import type { Post } from "@/schema";
 import { useSortCtx } from "./SortProvider";
 import { useFilterCtx } from "./FilterProvider";
 
-export const fakePosts: Post[] = [
-  {
-    title: "My new title",
-    content: "Some new content",
-    id: "EN7xBwgFZ7Vr0UoTJByV",
-    timestamp: 123456789,
-    comments: ["some positive comment", "any hate comment"],
-  },
-
-  {
-    content: "Some new content",
-    title: "My new title",
-    id: "divxjdv9EP8HvvTrHfpm",
-    comments: [],
-  },
-  {
-    content: "Some new content",
-    title: "My new title",
-    id: "ks5LahmDnBMB1j7UVWne",
-    comments: [],
-  },
-];
-
 export const PostsView: FC<{ posts?: Promise<Post[]>; className?: string }> = ({
   className,
 }) => {

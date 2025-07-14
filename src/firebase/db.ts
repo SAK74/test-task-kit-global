@@ -1,4 +1,3 @@
-import { initializeApp } from "firebase/app";
 import {
   addDoc,
   collection,
@@ -7,22 +6,10 @@ import {
   doc,
   getDoc,
   getDocs,
-  getFirestore,
   updateDoc,
 } from "firebase/firestore";
-import type { Post } from "./schema";
-
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGE_SENDING_ID,
-  appId: import.meta.env.VITE_API_ID,
-};
-
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+import { db } from "./config";
+import type { Post } from "@/schema";
 
 export async function getPosts() {
   const postsCollection = collection(db, "posts") as CollectionReference<Post>;
