@@ -4,7 +4,7 @@
 
 This project is a React and TypeScript application built with Vite and Next.js. It features a post management service with Firebase integration, state management using Redux Toolkit, and a modular UI based on Radix UI components and Tailwind CSS.
 
-The app allows users to review and manage posts — including adding, editing, removing, commenting, viewing detailed information, as well as sorting and filtering posts by multiple parameters.
+The app allows users to review and manage posts — including adding, editing, removing, commenting for logged users, viewing detailed information, as well as sorting and filtering posts by multiple parameters.
 
 Web preview:  
  [Static](http://www.sak74.pl/Kit_Global/)  
@@ -22,7 +22,8 @@ Web preview:
   Redux Toolkit is used for state management. See [posts.slice.ts](src/store/posts.slice.ts) for actions like `initiate`, `addPostAction`, and `updatePostAction`.
 
 - **Firebase Integration**  
-  CRUD operations for posts are implemented in [firebase.ts](src/firebase.ts), integrating Firebase Firestore.
+  CRUD operations for posts are implemented in [firebase.ts](src/firebase.ts), integrating Firebase Firestore.  
+  User authentication is also handled via Firebase, enabling login and access control for post management features.
 
 ## Launch Instructions
 
