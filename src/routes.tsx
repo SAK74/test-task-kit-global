@@ -1,6 +1,13 @@
 import type { RouteObject } from "react-router";
-import { Home } from "./pages/Home";
-import { Details } from "./pages/Details";
+import { lazy, Suspense } from "react";
+import { Spinner } from "./components/Spinner";
+
+const Home = lazy(() =>
+  import("./pages/Home").then((m) => ({ default: m.Home }))
+);
+const Details = lazy(() =>
+  import("./pages/Details").then((m) => ({ default: m.Details }))
+);
 
 export const Paths = {
   root: "/",
@@ -11,10 +18,18 @@ export const routes: RouteObject[] = [
   {
     index: true,
     path: Paths.root,
-    element: <Home />,
+    element: (
+      <Suspense fallback={<Spinner className="mx-auto my-[10%]" />}>
+        <Home />
+      </Suspense>
+    ),
   },
   {
     path: `${Paths.details}/:id`,
-    element: <Details />,
+    element: (
+      <Suspense fallback={<Spinner className="mx-auto my-[10%]" />}>
+        <Details />
+      </Suspense>
+    ),
   },
 ];
