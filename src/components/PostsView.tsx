@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import type { Post } from "@/schema";
 import { useSortCtx } from "./SortProvider";
 import { useFilterCtx } from "./FilterProvider";
+// import { fakePosts } from "@/../tests/mocks";
 
 export const PostsView: FC<{ posts?: Promise<Post[]>; className?: string }> = ({
   className,

@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC } from "react";
 import {
   Card,
   CardAction,
@@ -71,7 +71,7 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
           </Button>
         </CardAction>
       </CardHeader>
-      <CardContent className="border text-left rounded-md">
+      <CardContent className="text-left whitespace-pre overflow-hidden overflow-ellipsis break-all">
         {post.content}
       </CardContent>
     </Card>
