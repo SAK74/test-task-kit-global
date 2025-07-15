@@ -11,7 +11,7 @@ export const SideBar = () => {
   return (
     <>
       <SideBarUi
-        className="*:ml-4 pt-20 border-none  overflow-auto *:bg-background"
+        className="pt-20 border-none  overflow-auto *:bg-background"
         collapsible="offcanvas"
       >
         <SidebarContent>

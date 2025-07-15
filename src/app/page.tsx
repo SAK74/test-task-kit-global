@@ -14,11 +14,11 @@ import { cn } from "@/lib/utils";
 export default function Home() {
   return (
     <main className="">
-      <SidebarProvider>
+      <SidebarProvider className="**:data-[slot=sidebar-container]:sticky">
         <SortProvider>
           <FilterProvider>
             <SideBar />
-            <SidebarTrigger className="sticky top-32" />
+            <SidebarTrigger className="sticky top-16" />
             <ViewWithSideBar />
           </FilterProvider>
         </SortProvider>
