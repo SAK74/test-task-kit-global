@@ -1,10 +1,12 @@
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import postsSlice from "./posts.slice";
+import postsSlice, { initiate } from "./posts.slice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: combineSlices(postsSlice),
 });
+
+store.dispatch(initiate());
 
 export type TypedStore = ReturnType<typeof store.getState>;
 
