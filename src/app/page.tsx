@@ -1,45 +1,42 @@
 "use client";
 
-import { AddPost } from "@/components/AddPost";
-import { FilterPanel } from "@/components/FilterPanel";
 import { FilterProvider } from "@/components/FilterProvider";
 import { PostsView } from "@/components/PostsView";
-import { SortPanel } from "@/components/SortPanel";
+import { SideBar } from "@/components/SideBar";
 import { SortProvider } from "@/components/SortProvider";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTypedDispatch } from "@/store";
-import { initiate } from "@/store/posts.slice";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
-  const dispatch = useTypedDispatch();
-  useEffect(() => {
-    dispatch(initiate());
-  }, [dispatch]);
-
-  const { data } = useSession();
-
   return (
     <main className="">
-      <h1>Posts</h1>
-      <SortProvider>
-        <FilterProvider>
-          <div className="flex gap-6">
-            <Card className="px-4 w-1/4">
-              <CardHeader>
-                <CardTitle className="italic font-light">
-                  {data?.user?.email}
-                </CardTitle>
-              </CardHeader>
-              <AddPost />
-              <SortPanel />
-              <FilterPanel />
-            </Card>
-            <PostsView className="grow" />
-          </div>
-        </FilterProvider>
-      </SortProvider>
+      <SidebarProvider>
+        <SortProvider>
+          <FilterProvider>
+            <SideBar />
+            <SidebarTrigger className="sticky top-32" />
+            <ViewWithSideBar />
+          </FilterProvider>
+        </SortProvider>
+      </SidebarProvider>
     </main>
   );
 }
+
+const ViewWithSideBar = () => {
+  const { open, isMobile } = useSidebar();
+  return (
+    <div
+      className={cn("w-[calc(100%-28px)]", {
+        "w-[calc(100%-28px-16rem)]": open && !isMobile,
+      })}
+    >
+      <h1>Posts</h1>
+      <PostsView className="" />
+    </div>
+  );
+};
