@@ -3,6 +3,7 @@ import {
   Card,
   CardAction,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -53,6 +54,9 @@ export const SinglePost: FC<{ post: Post }> = ({ post }) => {
         </CommentPost>
 
         <CardTitle>{post.title}</CardTitle>
+        <CardDescription className="text-left">
+          By {post.author}
+        </CardDescription>
         <CardAction className="flex justify-between **:cursor-pointer">
           <Link href={`/details/${post.id}`}>
             <Button variant={"link"} className="">

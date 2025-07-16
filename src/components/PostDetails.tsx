@@ -22,13 +22,13 @@ export const Details: FC<{ id: string }> = ({ id }) => {
 
   return (
     <>
-      <Link href={"/"} className="self-start">
-        <Button variant={"link"}>
-          <ArrowBigLeftDashIcon />
-          Back to view
-        </Button>
-      </Link>
-      <Card className="">
+      <Card className="pt-1 w-fit min-w-1/2 mx-auto">
+        <Link href={"/"} className="self-start">
+          <Button variant={"link"}>
+            <ArrowBigLeftDashIcon />
+            Back to view
+          </Button>
+        </Link>
         <CardHeader>
           <CardTitle>{post.title}</CardTitle>
           <CardDescription className="flex justify-between">
@@ -43,23 +43,33 @@ export const Details: FC<{ id: string }> = ({ id }) => {
         <CardContent className="text-left">
           <div>{post.content}</div>
           <Separator className="my-2" />
-          <p className="text-center">Commented by:</p>
-          <ul className="italic list-disc list-inside">
-            {post.comments?.map((comment, i) => (
-              <li key={i} className="flex justify-between">
-                <span>
-                  <span className="font-semibold">
-                    {comment.by ?? "unknown"}:
-                  </span>{" "}
-                  {comment.text}
-                </span>
-                <span className="text-xs">
-                  {comment.timestamp &&
-                    new Date(comment.timestamp).toLocaleDateString()}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {!post.comments.length ? (
+            <p className="italic">No comments yet...</p>
+          ) : (
+            <>
+              <p className="text-center">Commented by:</p>
+              <ul className="italic list-disc list-inside">
+                {post.comments.map((comment, i) => (
+                  <li
+                    key={i}
+                    className="flex justify-between gap-4 items-center"
+                  >
+                    <span>
+                      <span className="font-semibold">
+                        {comment.by ?? "unknown"}:
+                      </span>{" "}
+                      {comment.text}
+                    </span>
+                    <span className="text-xs">
+                      {comment.timestamp &&
+                        new Date(comment.timestamp).toLocaleDateString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          {}
         </CardContent>
       </Card>
     </>

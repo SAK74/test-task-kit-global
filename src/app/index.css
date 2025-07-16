@@ -43,13 +43,7 @@
   --sidebar-ring: oklch(0.707 0.022 261.325)
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+
 
 h1 {
   @apply text-4xl m-3
@@ -169,5 +163,6 @@ h1 {
   }
   body {
     @apply bg-background text-foreground;
+    @apply m-0 flex items-stretch justify-center min-w-xs min-h-screen 
   }
 }

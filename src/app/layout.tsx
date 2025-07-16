@@ -24,11 +24,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="text-center p-4">
-        <div className="max-w-7xl my-0 mx-auto w-full">
+        <div className="w-full max-w-7xl">
           <Header />
-          <SessionProvider session={session} basePath={authConfig.basePath}>
-            <StoreProvider>{children}</StoreProvider>
-          </SessionProvider>
+          <main className="p-4">
+            <SessionProvider session={session} basePath={authConfig.basePath}>
+              <StoreProvider>{children}</StoreProvider>
+            </SessionProvider>
+          </main>
         </div>
       </body>
     </html>
