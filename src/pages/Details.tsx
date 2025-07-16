@@ -21,47 +21,52 @@ export const Details = () => {
   // const post = fakePosts[0];
 
   return (
-    <main className="flex flex-col w-1/2 mx-auto gap-6">
-      <Link to={`${Paths.root}`} className="self-start">
+    <Card className="pt-1 w-fit min-w-1/2 mx-auto">
+      <Link to={Paths.root} className="self-start">
         <Button variant={"link"}>
           <ArrowBigLeftDashIcon />
           Back to view
         </Button>
       </Link>
-      <Card className="">
-        <CardHeader>
-          <CardTitle>{post.title}</CardTitle>
-          <CardDescription className="flex justify-between">
-            <span>{post.author ?? "Author"}</span>
-            <span>
-              {post.timestamp
-                ? new Date(post.timestamp).toLocaleDateString()
-                : "-"}
-            </span>
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-left">
-          <div>{post.content}</div>
-          <Separator className="my-2" />
-          <p className="text-center">Commented by:</p>
-          <ul className="italic list-disc list-inside">
-            {post.comments?.map((comment, i) => (
-              <li key={i} className="flex justify-between">
-                <span>
-                  <span className="font-semibold">
-                    {comment.by ?? "unknown"}:
-                  </span>{" "}
-                  {comment.text}
-                </span>
-                <span className="text-xs">
-                  {comment.timestamp &&
-                    new Date(comment.timestamp).toLocaleDateString()}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-    </main>
+      <CardHeader>
+        <CardTitle>{post.title}</CardTitle>
+        <CardDescription className="flex justify-between">
+          <span>{post.author ?? "Author"}</span>
+          <span>
+            {post.timestamp
+              ? new Date(post.timestamp).toLocaleDateString()
+              : "-"}
+          </span>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="text-left">
+        <div>{post.content}</div>
+        <Separator className="my-2" />
+        {!post.comments.length ? (
+          <p className="italic">No comments yet...</p>
+        ) : (
+          <>
+            <p className="text-center">Commented by:</p>
+            <ul className="italic list-disc list-inside">
+              {post.comments.map((comment, i) => (
+                <li key={i} className="flex justify-between gap-4 items-center">
+                  <span>
+                    <span className="font-semibold">
+                      {comment.by ?? "unknown"}:
+                    </span>{" "}
+                    {comment.text}
+                  </span>
+                  <span className="text-xs">
+                    {comment.timestamp &&
+                      new Date(comment.timestamp).toLocaleDateString()}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {}
+      </CardContent>
+    </Card>
   );
 };

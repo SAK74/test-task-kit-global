@@ -12,9 +12,11 @@ function App() {
   return (
     <>
       <Header />
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
+      <main className="p-4">
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </main>
     </>
   );
 }

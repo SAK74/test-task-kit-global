@@ -11,17 +11,15 @@ import { cn } from "@/lib/utils";
 
 export const Home = () => {
   return (
-    <main className="">
-      <SidebarProvider>
-        <SortProvider>
-          <FilterProvider>
-            <SideBar />
-            <SidebarTrigger className="sticky top-32" />
-            <ViewWithSideBar />
-          </FilterProvider>
-        </SortProvider>
-      </SidebarProvider>
-    </main>
+    <SidebarProvider>
+      <SortProvider>
+        <FilterProvider>
+          <SideBar />
+          <SidebarTrigger className="sticky top-32" />
+          <ViewWithSideBar />
+        </FilterProvider>
+      </SortProvider>
+    </SidebarProvider>
   );
 };
 
